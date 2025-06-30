@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Sylius\GridImportExport\Controller;
 
-use Sylius\GridImportExport\Provider\ResourcesIdsProviderInterface;
 use Sylius\GridImportExport\Messenger\Command\ExportCommand;
+use Sylius\GridImportExport\Provider\ResourcesIdsProviderInterface;
 use Sylius\Resource\Metadata\RegistryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;

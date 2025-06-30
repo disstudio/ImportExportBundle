@@ -50,6 +50,5 @@
         "public-dir": "vendor/sylius/test-application/public"
     },
     "prefer-stable": true,
-    "prefer-dist": true,
     "minimum-stability": "alpha"
 }

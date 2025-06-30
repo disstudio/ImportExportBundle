@@ -1,0 +1,4 @@
+sylius_grid_import_export:
+  ui:
+    import_export: "Import / export"
+    processes: "Processes"

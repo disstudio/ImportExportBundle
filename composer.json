@@ -1,0 +1,46 @@
+{
+    "name": "sylius/grid-import-export-bundle",
+    "description": "tbd",
+    "type": "symfony-bundle",
+    "license": "proprietary",
+    "authors": [
+    ],
+    "autoload": {
+        "psr-4": {
+            "Sylius\\GridImportExport\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "doctrine/orm": "^2.18 || ^3.3",
+        "league/csv": "^9.24",
+        "sylius/grid-bundle": "^1.13",
+        "sylius/resource-bundle": "^1.13",
+        "sylius/ui-bundle": "^2.0",
+        "symfony/dependency-injection": "^6.4 || ^7.3",
+        "symfony/framework-bundle": "^6.4 || ^7.3",
+        "symfony/messenger": "^6.4 || ^7.3",
+        "symfony/ux-live-component": "^2.12",
+        "symfony/uid": "^6.4 || ^7.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5",
+        "webmozart/assert": "^1.11",
+        "sylius-labs/coding-standard": "^4.4",
+        "phpstan/phpstan": "^1.12",
+        "phpstan/phpstan-doctrine": "^1.5"
+    },
+    "extra": {
+        "symfony": {
+            "require": "^7.3"
+        },
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

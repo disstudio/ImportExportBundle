@@ -65,7 +65,7 @@ final class ExportAction
 
         return $this->resourcesIdsProvider->getResourceIds(
             metadata: $metadata,
-            context: ['request' => $request, 'currentPage' => $formData['currentPage'] ?? false],
+            context: ['request' => $request],
         );
     }
 }

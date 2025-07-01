@@ -5,28 +5,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
-    <parameters>
-        <!--        Temp parameters, should go through config tree -->
-        <parameter key="sylius_import_export.grid.export.allowed_sections" type="collection">
-            <parameter>admin</parameter>
-        </parameter>
-        <parameter key="sylius_import_export.grid.export.allowed_resources" type="collection">
-            <parameter>sylius.product</parameter>
-            <parameter>sylius.payment</parameter>
-            <parameter>sylius.shipment</parameter>
-            <parameter>sylius.order</parameter>
-            <parameter>sylius.customer</parameter>
-            <parameter>sylius_grid_import_export.process</parameter>
-        </parameter>
-        <!--        -->
-    </parameters>
-
     <services>
         <service id="sylius_import_export.grid.checker.exportable" class="Sylius\GridImportExport\Grid\Checker\ExportableChecker">
-            <argument type="service" id="request_stack" />
             <argument type="service" id="sylius.resource_registry" />
-            <argument>%sylius_import_export.grid.export.allowed_sections%</argument>
-            <argument>%sylius_import_export.grid.export.allowed_resources%</argument>
+            <argument>%sylius_import_export.export.resources%</argument>
         </service>
 
         <service
@@ -39,6 +21,8 @@
         </service>
 
         <service id="sylius_import_export.grid.listener.admin.export_action" class="Sylius\GridImportExport\Grid\Listener\ExportActionAdminGridListener">
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="sylius.section_resolver.uri_based" on-invalid="null" />
             <argument type="service" id="sylius_import_export.grid.checker.exportable" />
 
             <tag name="kernel.event_listener" event="sylius.grid.common" method="addExportActions" />

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Sylius\GridImportExport\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -37,8 +38,14 @@ final class ExportResourceType extends AbstractType
             ->add('currentPage', CheckboxType::class, [
                 'label' => 'sylius_grid_import_export.grid.form.current_page',
             ])
+            ->add('ids', HiddenType::class)
             ->add('resourceClass', HiddenType::class)
         ;
+
+        $builder->get('ids')->addModelTransformer(new CallbackTransformer(
+            fn (?array $ids): string => implode(',', $ids ?? []),
+            fn (?string $idsString): array => explode(',', $idsString ?? ''),
+        ));
     }
 
     public function getBlockPrefix(): string

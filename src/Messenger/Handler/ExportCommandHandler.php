@@ -20,6 +20,7 @@ use Sylius\GridImportExport\Messenger\Command\ExportCommand;
 use Sylius\GridImportExport\Provider\ResourceData\ResourceDataProviderInterface;
 use Sylius\GridImportExport\Resolver\ExporterResolverInterface;
 use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
+use Sylius\Resource\Metadata\RegistryInterface;
 
 class ExportCommandHandler
 {
@@ -27,6 +28,7 @@ class ExportCommandHandler
      * @param RepositoryInterface<ProcessInterface> $processRepository
      */
     public function __construct(
+        public RegistryInterface $metadataRegistry,
         public ProcessFactoryInterface $processFactory,
         public RepositoryInterface $processRepository,
         public ResourceDataProviderInterface $resourceDataProvider,
@@ -42,9 +44,13 @@ class ExportCommandHandler
 
         $this->processRepository->add($process);
 
+        $resourceMetadata = $this->metadataRegistry->get($command->resource);
+
         $data = $this->resourceDataProvider->getData(
-            $command->resource,
+            $resourceMetadata,
+            $command->grid,
             $command->resourceIds,
+            $command->parameters,
         );
 
         try {

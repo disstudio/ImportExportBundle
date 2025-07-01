@@ -2,4 +2,37 @@ sylius_grid:
     templates:
         action:
             export: '@SyliusGridImportExport\admin\import_export\grid\action\export.html.twig'
-
+    grids:
+        sylius_grid_import_export_admin_process:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: Sylius\GridImportExport\Entity\Process
+            sorting:
+                createdAt: desc
+            fields:
+                uuid:
+                    type: string
+                    label: sylius.ui.id
+                    sortable: ~
+                type:
+                    type: string
+                    label: sylius.ui.type
+                resource:
+                    type: string
+                    label: sylius.ui.resource
+                status:
+                    type: string
+                    label: sylius.ui.status
+                createdAt:
+                    type: datetime
+                    label: sylius.ui.created_at
+            actions:
+                item:
+                    show:
+                        type: show
+                    delete:
+                        type: delete
+                bulk:
+                    delete:
+                        type: delete

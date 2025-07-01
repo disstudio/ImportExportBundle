@@ -36,6 +36,6 @@ final readonly class AdminImportExportMenuListener
             ])
             ->setLabel('sylius_grid_import_export.ui.processes');
 
-        $this->menuReorder->reorder($menu, 'import_export', 'configuration');
+        $this->menuReorder->reorder($menu, 'import_export', 'marketing');
     }
 }

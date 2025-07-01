@@ -92,5 +92,12 @@
         <service id="sylius_import_export.listener.grid.admin.export_action" class="Sylius\GridImportExport\Grid\Listener\ExportActionAdminGridListener">
             <tag name="kernel.event_listener" event="sylius.grid.common" method="addExportMainAction" />
         </service>
+
+        <service id="sylius_grid_import_export.menu.admin_listener" class="Sylius\GridImportExport\Menu\AdminImportExportMenuListener">
+            <argument type="service" id="sylius_grid_import_export.menu.reorder" />
+            <tag name="kernel.event_listener" method="buildMenu" event="sylius.menu.admin.main" />
+        </service>
+
+        <service id="sylius_grid_import_export.menu.reorder" class="Sylius\GridImportExport\Menu\MenuReorder" />
     </services>
 </container>

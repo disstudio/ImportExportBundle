@@ -94,6 +94,13 @@
             <argument type="service" id=".inner" />
         </service>
 
+        <service id="sylius_import_export.grid.checker.exportable" class="Sylius\GridImportExport\Grid\Checker\ExportableChecker">
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="sylius.resource_registry" />
+            <argument>%sylius_import_export.grid.export.allowed_sections%</argument>
+            <argument>%sylius_import_export.grid.export.allowed_resources%</argument>
+        </service>
+
         <service
             id="sylius_import_export.grid.array_to_definition_converter.common_event_dispatching"
             class="Sylius\GridImportExport\Grid\Definition\CommonEventDispatchingArrayToDefinitionConverter"
@@ -103,11 +110,8 @@
             <argument type="service" id=".inner" />
         </service>
 
-        <service id="sylius_import_export.listener.grid.admin.export_action" class="Sylius\B2BKit\Grid\Listener\ExportActionAdminGridListener">
-            <argument type="service" id="request_stack" />
-            <argument type="service" id="sylius.resource_registry" />
-            <argument>%sylius_import_export.grid.export.allowed_sections%</argument>
-            <argument>%sylius_import_export.grid.export.allowed_resources%</argument>
+        <service id="sylius_import_export.listener.grid.admin.export_action" class="Sylius\Grid\Listener\ExportActionAdminGridListener">
+            <argument type="service" id="sylius_import_export.grid.checker.exportable" />
 
             <tag name="kernel.event_listener" event="sylius.grid.common" method="addExportMainAction" />
         </service>

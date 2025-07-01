@@ -16,22 +16,13 @@ namespace Sylius\GridImportExport\Grid\Listener;
 use Sylius\Component\Grid\Definition\Action;
 use Sylius\Component\Grid\Definition\ActionGroup;
 use Sylius\Component\Grid\Event\GridDefinitionConverterEvent;
-use Sylius\Resource\Metadata\RegistryInterface;
 use Sylius\Bundle\GridBundle\Doctrine\ORM\Driver as ORMDriver;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Sylius\GridImportExport\Grid\Checker\ExportableCheckerInterface;
 
 final readonly class ExportActionAdminGridListener
 {
-    /**
-     * @param array<array-key, string> $allowedSections
-     * @param array<array-key, string> $allowedResources
-     */
     public function __construct(
-        private RequestStack $requestStack,
-        private RegistryInterface $resourceRegistry,
-        private array $allowedSections,
-        private array $allowedResources,
+        private ExportableCheckerInterface $exportableChecker,
     ) {
     }
 
@@ -42,7 +33,7 @@ final readonly class ExportActionAdminGridListener
             return;
         }
 
-        if (!$this->canBeExported($grid->getDriverConfiguration())) {
+        if (!$this->exportableChecker->canBeExported($grid)) {
             return;
         }
 
@@ -58,31 +49,5 @@ final readonly class ExportActionAdminGridListener
         $action = Action::fromNameAndType('export', 'export');
 
         $actionGroup->addAction($action);
-    }
-
-    private function canBeExported(array $driverConfiguration): bool
-    {
-        $resourceClass = $driverConfiguration['class'] ?? null;
-        if (null === $resourceClass) {
-            return false;
-        }
-
-        $request = $this->requestStack->getMainRequest();
-        if (!$request instanceof Request) {
-            return false;
-        }
-
-        if (!$request->attributes->has('_sylius')) {
-            return false;
-        }
-
-        $syliusAttributes = $request->attributes->all()['_sylius'];
-        if (!in_array($syliusAttributes['section'] ?? null, $this->allowedSections)) {
-            return false;
-        }
-
-        $resourceMetadata = $this->resourceRegistry->getByClass($resourceClass);
-
-        return in_array($resourceMetadata->getAlias(), $this->allowedResources);
     }
 }

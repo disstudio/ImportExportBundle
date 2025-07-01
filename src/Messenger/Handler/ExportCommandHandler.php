@@ -17,7 +17,7 @@ use Sylius\GridImportExport\Entity\ProcessInterface;
 use Sylius\GridImportExport\Exception\ExportFailedException;
 use Sylius\GridImportExport\Factory\ProcessFactoryInterface;
 use Sylius\GridImportExport\Messenger\Command\ExportCommand;
-use Sylius\GridImportExport\Provider\ResourceDataProviderInterface;
+use Sylius\GridImportExport\Provider\ResourceData\ResourceDataProviderInterface;
 use Sylius\GridImportExport\Resolver\ExporterResolverInterface;
 use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 

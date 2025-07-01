@@ -11,11 +11,15 @@
 
 declare(strict_types=1);
 
-namespace Sylius\GridImportExport\Provider;
+namespace Sylius\GridImportExport\Provider\ResourceIds;
 
+use Sylius\GridImportExport\Exception\ProviderException;
 use Sylius\Resource\Metadata\MetadataInterface;
 
 interface ResourcesIdsProviderInterface
 {
+    /** @throws ProviderException */
     public function getResourceIds(MetadataInterface $metadata, array $context = []): array;
+
+    public function supports(MetadataInterface $metadata, array $context = []): bool;
 }

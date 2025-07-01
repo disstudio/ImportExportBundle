@@ -40,14 +40,24 @@
         </service>
         <service id="Sylius\GridImportExport\Resolver\ExporterResolverInterface" alias="sylius_grid_import_export.exporter_resolver" />
 
-        <service id="sylius_import_export.provider.resource_data.default" class="Sylius\GridImportExport\Provider\DefaultResourceDataProvider">
+        <service id="sylius_import_export.provider.resource_data.default" class="Sylius\GridImportExport\Provider\ResourceData\DefaultResourceDataProvider">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
 
-        <service id="sylius_import_export.provider.resources_ids.request_based" class="Sylius\GridImportExport\Provider\RequestBasedResourcesIdsProvider">
+        <service id="sylius_import_export.provider.resources_ids" class="Sylius\GridImportExport\Provider\ResourceIds\CompositeResourceIdsProvider">
+            <argument type="tagged_iterator" tag="sylius_import_export.resource_ids_provider" />
+        </service>
+
+        <service id="sylius_import_export.provider.resources_ids.request_based" class="Sylius\GridImportExport\Provider\ResourceIds\RequestBasedResourcesIdsProvider">
             <argument type="service" id="sylius.resource_controller.request_configuration_factory" />
             <argument type="service" id="sylius.resource_controller.resources_collection_provider" />
             <argument type="service" id="doctrine.orm.entity_manager" />
+
+            <tag name="sylius_import_export.resource_ids_provider" />
+        </service>
+
+        <service id="sylius_import_export.provider.resources_ids.static" class="Sylius\GridImportExport\Provider\ResourceIds\StaticResourceIdsProvider">
+            <tag name="sylius_import_export.resource_ids_provider" priority="512" />
         </service>
 
         <service id="sylius_import_export.messenger.command_handler.export" class="Sylius\GridImportExport\Messenger\Handler\ExportCommandHandler">
@@ -93,7 +103,7 @@
 
         <service id="sylius_import_export.controller.export_action" class="Sylius\GridImportExport\Controller\ExportAction" public="true">
             <argument type="service" id="sylius.resource_registry" />
-            <argument type="service" id="sylius_import_export.provider.resources_ids.request_based" />
+            <argument type="service" id="sylius_import_export.provider.resources_ids" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="sylius.command_bus" />
             <argument>%sylius_import_export.export.form_class%</argument>

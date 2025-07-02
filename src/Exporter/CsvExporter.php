@@ -34,6 +34,7 @@ final class CsvExporter extends AbstractExporter
 
     public function export(array $data): string
     {
+        $data = $this->normalizeValues($data);
         $filename = $this->generateFilePath(self::FORMAT);
 
         try {
@@ -45,5 +46,25 @@ final class CsvExporter extends AbstractExporter
         }
 
         return $filename;
+    }
+
+    // TODO: Temporary bugfix, should be extracted into a serializer/normalizer system
+    private function normalizeValues(array $data): array
+    {
+        $dataCount = count($data);
+        for ($i = 0; $i < $dataCount; ++$i) {
+            foreach ($data[$i] as $field => $value) {
+                if ($value instanceof \DateTime) {
+                    $data[$i][$field] = $value->format(\DATE_ATOM);
+
+                    continue;
+                }
+                if (is_object($value) || is_array($value)) {
+                    $data[$i][$field] = json_encode($value);
+                }
+            }
+        }
+
+        return $data;
     }
 }

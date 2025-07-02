@@ -10,9 +10,16 @@
     </imports>
 
     <services>
+        <service id="sylius_import_export.messenger.command_handler.create_export_process" class="Sylius\GridImportExport\Messenger\Handler\CreateExportProcessHandler">
+            <argument type="service" id="sylius_import_export.custom_factory.process" />
+            <argument type="service" id="sylius_grid_import_export.repository.process" />
+            <argument type="service" id="sylius.command_bus" />
+
+            <tag name="messenger.message_handler" bus="sylius.command_bus" />
+        </service>
+
         <service id="sylius_import_export.messenger.command_handler.export" class="Sylius\GridImportExport\Messenger\Handler\ExportCommandHandler">
             <argument type="service" id="sylius.resource_registry" />
-            <argument type="service" id="sylius_import_export.factory.process" />
             <argument type="service" id="sylius_grid_import_export.repository.process_export" />
             <argument type="service" id="sylius_import_export.registry.resource_data_provider" />
             <argument type="service" id="sylius_grid_import_export.exporter_resolver" />

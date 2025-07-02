@@ -15,4 +15,13 @@ interface ExportProcessInterface extends ProcessInterface
     public function getResourceIds(): array;
 
     public function setResourceIds(array $resourceIds): void;
+
+    public function getGrid(): string;
+
+    public function setGrid(string $grid): void;
+
+    public function getParameters(): array;
+
+    public function setParameters(array $parameters): void;
+
 }

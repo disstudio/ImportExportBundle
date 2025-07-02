@@ -15,7 +15,7 @@ namespace Sylius\GridImportExport\Factory;
 
 use Sylius\GridImportExport\Entity\ExportProcessInterface;
 use Sylius\GridImportExport\Entity\ProcessInterface;
-use Sylius\GridImportExport\Messenger\Command\ExportCommand;
+use Sylius\GridImportExport\Messenger\Command\CreateExportProcess;
 use Sylius\Resource\Factory\FactoryInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -32,12 +32,14 @@ final readonly class ProcessFactory implements ProcessFactoryInterface
         throw new \InvalidArgumentException();
     }
 
-    public function createExportProcess(ExportCommand $command): ExportProcessInterface
+    public function createExportProcess(CreateExportProcess $command): ExportProcessInterface
     {
         $process = $this->exportFactory->createNew();
         $process->setUuid(Uuid::v7()->toRfc4122());
         $process->setResource($command->resource);
+        $process->setGrid($command->grid);
         $process->setFormat($command->format);
+        $process->setParameters($command->parameters);
         $process->setResourceIds($command->resourceIds);
         $process->setStatus('processing');
 

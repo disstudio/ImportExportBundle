@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Sylius\GridImportExport\Messenger\Handler;
 
 use Sylius\GridImportExport\Entity\ProcessInterface;
-use Sylius\GridImportExport\Exception\ExportFailedException;
 use Sylius\GridImportExport\Factory\ProcessFactoryInterface;
 use Sylius\GridImportExport\Messenger\Command\ExportCommand;
 use Sylius\GridImportExport\Provider\Registry\ResourceDataProviderRegistryInterface;
@@ -56,9 +55,6 @@ class ExportCommandHandler
 
             $process->setStatus('success');
             $process->setOutput($outputPath);
-        } catch (ExportFailedException $e) {
-            $process->setStatus('failed');
-            $process->setErrorMessage($e->getMessage());
         } catch (\Throwable $e) {
             $process->setStatus('failed');
             $process->setErrorMessage($e->getMessage());

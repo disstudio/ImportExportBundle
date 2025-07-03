@@ -39,7 +39,7 @@ class ExportCommandHandler
     {
         $resolver = $this->exporterResolver->resolve($command->format);
 
-        $process = $this->processFactory->createFromExportCommand($command);
+        $process = $this->processFactory->createExportProcess($command);
 
         $this->processRepository->add($process);
 

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sylius\ImportExport\DependencyInjection;
 
+use Sylius\ImportExport\Serializer\DefaultSerializationGroups;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -59,7 +60,7 @@ final class Configuration implements ConfigurationInterface
                                 ->children()
                                     ->scalarNode('serialization_group')
                                         ->isRequired()
-                                        ->defaultValue('sylius_import_export.export')
+                                        ->defaultValue(DefaultSerializationGroups::EXPORT_GROUP)
                                     ->end()
                                     ->scalarNode('provider')
                                         ->defaultNull()

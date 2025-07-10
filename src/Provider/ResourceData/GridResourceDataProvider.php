@@ -20,6 +20,8 @@ use Sylius\Component\Grid\Parameters;
 use Sylius\Component\Grid\Provider\GridProviderInterface;
 use Sylius\ImportExport\Exception\ProviderException;
 use Sylius\ImportExport\Provider\ResourceIdentifierProviderInterface;
+use Sylius\ImportExport\Serializer\DefaultSerializationGroups;
+use Sylius\ImportExport\Serializer\ExportAwareItemNormalizer;
 use Sylius\Resource\Metadata\MetadataInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -55,9 +57,10 @@ final class GridResourceDataProvider implements ResourceDataProviderInterface
 
         $rawData = $dataSource->getQueryBuilder()->getQuery()->getResult();
 
+        /** @phpstan-ignore-next-line */
         return $this->serializer->normalize($rawData, context: [
-            'sylius_import_export.export' => true,
-            'groups' => array_merge($parameters['serialization_groups'] ?? [], ['sylius_import_export:export']),
+            ExportAwareItemNormalizer::EXPORT_CONTEXT_KEY => true,
+            'groups' => $parameters['serialization_groups'], [DefaultSerializationGroups::EXPORT_GROUP],
         ]);
     }
 }

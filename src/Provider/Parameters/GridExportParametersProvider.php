@@ -1,11 +1,21 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Sylius\ImportExport\Provider\Parameters;
 
 use Sylius\Bundle\ResourceBundle\Controller\ParametersParserInterface;
 use Sylius\Component\Grid\Provider\GridProviderInterface;
+use Sylius\ImportExport\Serializer\DefaultSerializationGroups;
 use Sylius\Resource\Metadata\MetadataInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,7 +34,7 @@ final class GridExportParametersProvider implements GridExportParametersProvider
         $gridConfiguration = $this->gridProvider->get($gridName);
 
         $resourceExportConfiguration = $this->resourceExportConfiguration[$metadata->getAlias()] ?? [];
-        $serializationGroup = $resourceExportConfiguration['serialization_group'] ?? 'sylius_import_export.export';
+        $serializationGroup = $resourceExportConfiguration['serialization_group'] ?? DefaultSerializationGroups::EXPORT_GROUP;
 
         $parameters = $this->parametersParser->parseRequestValues(
             $gridConfiguration->getDriverConfiguration(),

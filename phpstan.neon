@@ -10,3 +10,4 @@ parameters:
 
     excludePaths:
         - '%currentWorkingDirectory%/src/DependencyInjection/Configuration.php'
+        - '%currentWorkingDirectory%/src/Serializer/ExportAwareItemNormalizer.php'

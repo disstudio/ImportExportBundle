@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Sylius package.
+ *
+ * (c) Sylius Sp. z o.o.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Sylius\ImportExport\Serializer;
@@ -19,11 +28,14 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 
 /**
- * @internal Decorates the original to prevent generating iris for exportable items.
  * @see ItemNormalizer
+ *
+ * @internal Decorates the original to prevent generating iris for exportable items.
  */
 class ExportAwareItemNormalizer extends ItemNormalizer
 {
+    public const EXPORT_CONTEXT_KEY = 'sylius_import_export.export';
+
     public function __construct(
         PropertyNameCollectionFactoryInterface $propertyNameCollectionFactory,
         PropertyMetadataFactoryInterface $propertyMetadataFactory,
@@ -57,7 +69,7 @@ class ExportAwareItemNormalizer extends ItemNormalizer
 
     public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
-        if (isset($context['sylius_import_export.export'])) {
+        if (isset($context[self::EXPORT_CONTEXT_KEY])) {
             return false;
         }
 
@@ -73,9 +85,9 @@ class ExportAwareItemNormalizer extends ItemNormalizer
         mixed $data,
         string $type,
         ?string $format = null,
-        array $context = []
+        array $context = [],
     ): bool {
-        if (isset($context['sylius_import_export.export'])) {
+        if (isset($context[self::EXPORT_CONTEXT_KEY])) {
             return false;
         }
 

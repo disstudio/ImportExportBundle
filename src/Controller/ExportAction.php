@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Sylius\ImportExport\Controller;
 
-use Sylius\Bundle\ResourceBundle\Controller\ParametersParserInterface;
-use Sylius\Component\Grid\Provider\GridProviderInterface;
 use Sylius\ImportExport\Messenger\Command\CreateExportProcess;
 use Sylius\ImportExport\Provider\Parameters\GridExportParametersProviderInterface;
 use Sylius\ImportExport\Provider\ResourceIds\ResourcesIdsProviderInterface;

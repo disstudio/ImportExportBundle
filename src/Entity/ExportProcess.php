@@ -17,8 +17,6 @@ class ExportProcess extends Process implements ExportProcessInterface
 {
     protected string $format;
 
-    protected string $grid;
-
     protected array $parameters = [];
 
     protected array $resourceIds = [];
@@ -40,16 +38,6 @@ class ExportProcess extends Process implements ExportProcessInterface
     public function setFormat(string $format): void
     {
         $this->format = $format;
-    }
-
-    public function getGrid(): string
-    {
-        return $this->grid;
-    }
-
-    public function setGrid(string $grid): void
-    {
-        $this->grid = $grid;
     }
 
     public function getParameters(): array

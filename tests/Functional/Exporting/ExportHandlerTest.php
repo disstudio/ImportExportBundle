@@ -278,7 +278,6 @@ final class ExportHandlerTest extends FunctionalTestCase
     ): ExportProcessInterface {
         $process = new ExportProcess();
         $process->setUuid($uuid);
-        $process->setGrid('test_dummy');
         $process->setBatchesCount(1);
         $process->setResource('sylius_import_export.test_dummy');
         $process->setFormat($format);

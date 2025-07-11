@@ -40,7 +40,7 @@ final class Configuration implements ConfigurationInterface
                     ->isRequired()
                     ->children()
                         ->scalarNode('default_provider')
-                            ->defaultValue('sylius_import_export.provider.resource_data.grid')
+                            ->defaultValue('sylius_import_export.provider.resource_data.orm')
                             ->cannotBeEmpty()
                         ->end()
                         ->scalarNode('default_section')

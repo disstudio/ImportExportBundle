@@ -22,7 +22,6 @@ class CreateExportProcess
     public function __construct(
         public string $resource,
         public string $format,
-        public string $grid,
         public array $parameters,
         public array $resourceIds,
     ) {

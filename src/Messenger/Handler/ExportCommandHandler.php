@@ -45,7 +45,7 @@ class ExportCommandHandler
 
         $data = $this->dataProviderRegistry
             ->getProvider($resourceMetadata)
-            ->getData($resourceMetadata, $process->getGrid(), $command->resourceIds, $process->getParameters())
+            ->getData($resourceMetadata, $command->resourceIds, $process->getParameters())
         ;
 
         $process->setBatchesCount($process->getBatchesCount() - 1);

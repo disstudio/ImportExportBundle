@@ -33,7 +33,7 @@ final class DbalResourceDataProvider implements ResourceDataProviderInterface
     ) {
     }
 
-    public function getData(MetadataInterface $resource, string $gridCode, array $resourceIds, array $parameters): array
+    public function getData(MetadataInterface $resource, array $resourceIds, array $parameters): array
     {
         $resourceIdentifierField = $this->identifierProvider->getIdentifierField($resource);
         $metadata = $this->getResourceMetadata($resource->getClass('model'));

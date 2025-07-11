@@ -59,7 +59,6 @@ final class ExportAction
         $this->commandBus->dispatch(new CreateExportProcess(
             resource: $metadata->getAlias(),
             format: $format,
-            grid: $grid,
             parameters: $parameters,
             resourceIds: $resourceIds,
         ));

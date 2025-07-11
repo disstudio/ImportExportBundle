@@ -41,9 +41,9 @@ final class GridExportParametersProvider implements GridExportParametersProvider
             $request,
         );
 
-        return array_merge(
-            $parameters,
-            ['serialization_group' => $serializationGroup],
-        );
+        return array_merge($parameters, [
+            'grid' => $gridName,
+            'serialization_group' => $serializationGroup,
+        ]);
     }
 }

@@ -16,7 +16,7 @@ framework:
 
 sylius_import_export:
     export:
-        default_provider: 'sylius_import_export.provider.resource_data.grid'
+        default_provider: 'sylius_import_export.provider.resource_data.orm'
         default_section: 'admin'
         resources:
             sylius.order:

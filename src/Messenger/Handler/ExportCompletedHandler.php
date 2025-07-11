@@ -41,7 +41,7 @@ class ExportCompletedHandler
         }
 
         $batchedData = $this->batchedDataManager->getBatchedData($process);
-        $data = iterator_to_array($batchedData);
+        $data = iterator_to_array(...$batchedData);
 
         if ([] !== $data) {
             try {

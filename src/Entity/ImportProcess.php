@@ -27,6 +27,8 @@ class ImportProcess extends Process implements ImportProcessInterface
 
     protected ?string $temporaryDataStorage = null;
 
+    protected int $toBeImportedCount = 0;
+
     public function getType(): string
     {
         return ImportProcessInterface::TYPE;
@@ -90,5 +92,15 @@ class ImportProcess extends Process implements ImportProcessInterface
     public function setTemporaryDataStorage(?string $storage): void
     {
         $this->temporaryDataStorage = $storage;
+    }
+
+    public function getToBeImportedCount(): int
+    {
+        return $this->toBeImportedCount;
+    }
+
+    public function setToBeImportedCount(int $count): void
+    {
+        $this->toBeImportedCount = $count;
     }
 }

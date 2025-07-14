@@ -5,6 +5,7 @@ sylius_grid:
     templates:
         action:
             export: '@SyliusImportExport\admin\import_export\grid\action\export.html.twig'
+            import: '@SyliusImportExport\admin\import_export\grid\action\import.html.twig'
             download: '@SyliusImportExport\admin\import_export\grid\action\download.html.twig'
         bulk_action:
             export: '@SyliusImportExport\admin\import_export\grid\bulk_action\export.html.twig'

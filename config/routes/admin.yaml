@@ -6,6 +6,14 @@ sylius_import_export.admin.resource.export:
         _sylius:
             filterable: true
 
+sylius_import_export.admin.resource.import:
+    path: /import/{grid}
+    methods: [POST]
+    defaults:
+        _controller: sylius_import_export.controller.import_action
+        _sylius:
+            filterable: true
+
 sylius_import_export_admin_process_export:
     resource: |
         alias: sylius_import_export.process_export

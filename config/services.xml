@@ -100,6 +100,15 @@
             <tag name="controller.service_arguments" />
         </service>
 
+        <service id="sylius_import_export.controller.import_action" class="Sylius\ImportExport\Controller\ImportAction" public="true">
+            <argument type="service" id="sylius.resource_registry" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="sylius.command_bus" />
+            <argument>%sylius_import_export.import.form_class%</argument>
+
+            <tag name="controller.service_arguments" />
+        </service>
+
         <service id="sylius_import_export.factory.process" class="Sylius\ImportExport\Factory\ProcessFactory">
             <argument type="service" id="sylius_import_export.factory.process_export" />
             <argument type="service" id="sylius_import_export.factory.process_import" />
@@ -125,5 +134,17 @@
         >
             <argument type="service" id=".inner" />
         </service>
+
+        <service id="sylius_import_export.twig.component.import_resource" class="Sylius\ImportExport\Twig\Component\ImportResourceFormComponent">
+            <argument type="service" id="form.factory" />
+            <argument>%sylius_import_export.import.form_class%</argument>
+
+            <tag
+                name="twig.component"
+                key="sylius_import_export:admin:import"
+                template="@SyliusImportExport\admin\import_export\component\main_import_form.html.twig"
+            />
+        </service>
+
     </services>
 </container>

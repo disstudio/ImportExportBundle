@@ -37,7 +37,6 @@ final readonly class ProcessFactory implements ProcessFactoryInterface
         $process = $this->exportFactory->createNew();
         $process->setUuid(Uuid::v7()->toRfc4122());
         $process->setResource($command->resource);
-        $process->setGrid($command->grid);
         $process->setFormat($command->format);
         $process->setParameters($command->parameters);
         $process->setResourceIds($command->resourceIds);

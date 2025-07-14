@@ -13,9 +13,8 @@ declare(strict_types=1);
 
 namespace Sylius\ImportExport\Controller;
 
-use Sylius\Bundle\ResourceBundle\Controller\ParametersParserInterface;
-use Sylius\Component\Grid\Provider\GridProviderInterface;
 use Sylius\ImportExport\Messenger\Command\CreateExportProcess;
+use Sylius\ImportExport\Provider\Parameters\GridExportParametersProviderInterface;
 use Sylius\ImportExport\Provider\ResourceIds\ResourcesIdsProviderInterface;
 use Sylius\Resource\Metadata\RegistryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -29,9 +28,8 @@ final class ExportAction
 {
     public function __construct(
         private RegistryInterface $metadataRegistry,
-        private GridProviderInterface $gridProvider,
-        private ParametersParserInterface $parametersParser,
         private ResourcesIdsProviderInterface $resourcesIdsProvider,
+        private GridExportParametersProviderInterface $parametersProvider,
         private FormFactoryInterface $formFactory,
         private MessageBusInterface $commandBus,
         private string $exportForm,
@@ -50,22 +48,17 @@ final class ExportAction
         $resourceClass = $data['resourceClass'];
 
         $metadata = $this->metadataRegistry->getByClass($resourceClass);
-        $gridConfiguration = $this->gridProvider->get($grid);
 
         $resourceIds = $this->resourcesIdsProvider->getResourceIds(
             metadata: $metadata,
             context: ['request' => $request, 'ids' => $data['ids'] ?? []],
         );
 
-        $parameters = $this->parametersParser->parseRequestValues(
-            $gridConfiguration->getDriverConfiguration(),
-            $request,
-        );
+        $parameters = $this->parametersProvider->getParameters($metadata, $grid, $request);
 
         $this->commandBus->dispatch(new CreateExportProcess(
             resource: $metadata->getAlias(),
             format: $format,
-            grid: $grid,
             parameters: $parameters,
             resourceIds: $resourceIds,
         ));

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Sylius\ImportExport\DependencyInjection;
 
+use Sylius\ImportExport\Serializer\DefaultSerializationGroups;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -39,7 +40,7 @@ final class Configuration implements ConfigurationInterface
                     ->isRequired()
                     ->children()
                         ->scalarNode('default_provider')
-                            ->defaultValue('sylius_import_export.provider.resource_data.grid')
+                            ->defaultValue('sylius_import_export.provider.resource_data.orm')
                             ->cannotBeEmpty()
                         ->end()
                         ->scalarNode('default_section')
@@ -57,6 +58,10 @@ final class Configuration implements ConfigurationInterface
                                     })
                                 ->end()
                                 ->children()
+                                    ->scalarNode('serialization_group')
+                                        ->cannotBeEmpty()
+                                        ->defaultValue(DefaultSerializationGroups::EXPORT_GROUP)
+                                    ->end()
                                     ->scalarNode('provider')
                                         ->defaultNull()
                                     ->end()

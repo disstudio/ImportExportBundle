@@ -18,6 +18,7 @@ sylius_import_export:
     export:
         resources:
             app.brand:
+                serialization_group: 'app:brand:export'
                 provider: 'sylius_import_export.provider.resource_data.dbal'
                 sections:
                     - 'admin'
@@ -30,7 +31,7 @@ Reference:
 sylius_import_export:
     export:
         # The provider used by default when none is configured on a specific resource;
-        # defaults to 'sylius_import_export.provider.resource_data.grid'.
+        # defaults to 'sylius_import_export.provider.resource_data.orm'.
         default_provider: <service_id>
         # The section in which the actions are added to the grid.
         # Can be either an FQCN of a class implementing the Sylius\Bundle\CoreBundle\SectionResolver\SectionInterface,
@@ -41,10 +42,13 @@ sylius_import_export:
             # The alias of a resource as configured within the ResourceBundle
             # It can be retried by using the `console/bin sylius:debug:resource` console command.
             <resource_alias>:
+                # The group used for data serialization, when not specified, defaults to "sylius_import_export:export"
+                serialization_group: <string>
                 # Resource specific overwrite of the default_provider
                 provider: <service_id>
                 # Resource specific overwrite of the default section
                 sections:
                     - <string>
                     - ...
+                
 ```

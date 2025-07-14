@@ -72,9 +72,10 @@ Symfony Flex, it's much quicker!
             resources:
                 sylius.order: ~
                 app.brand:
+                    serialization_group: 'app:brand:export'
                     sections:
                         - 'Sylius\Bundle\AdminBundle\SectionResolver\AdminSection'
-                    provider: 'sylius_import_export.provider.resource_data.dbal'
+                    provider: 'sylius_import_export.provider.resource_data.orm'
     ```
    For a more detailed overview check the [configuration reference](docs/configuration_reference.md).
 

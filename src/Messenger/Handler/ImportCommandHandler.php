@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Sylius\ImportExport\Messenger\Handler;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Sylius\ImportExport\Denormalizer\DenormalizerRegistryInterface;
 use Sylius\ImportExport\Entity\ImportProcessInterface;
 use Sylius\ImportExport\Exception\ImportFailedException;
 use Sylius\ImportExport\Messenger\Command\ImportCommand;
@@ -23,6 +25,8 @@ class ImportCommandHandler
     /** @param RepositoryInterface<ImportProcessInterface> $processRepository */
     public function __construct(
         protected RepositoryInterface $processRepository,
+        protected DenormalizerRegistryInterface $denormalizerRegistry,
+        protected EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -35,12 +39,17 @@ class ImportCommandHandler
 
         try {
             $importedCount = 0;
+            $resourceClass = $process->getResource();
+            $denormalizer = $this->denormalizerRegistry->get($resourceClass);
 
             foreach ($command->batchData as $recordData) {
-                // TODO: Process the record
+                $entity = $denormalizer->denormalize($recordData, $resourceClass);
+                $this->entityManager->persist($entity);
 
                 ++$importedCount;
             }
+
+            $this->entityManager->flush();
 
             $process->setBatchesCount($process->getBatchesCount() - 1);
             $process->setImportedCount($process->getImportedCount() + $importedCount);

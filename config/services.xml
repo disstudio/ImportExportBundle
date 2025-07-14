@@ -55,6 +55,8 @@
 
         <service id="sylius_import_export.messenger.command_handler.import" class="Sylius\ImportExport\Messenger\Handler\ImportCommandHandler">
             <argument type="service" id="sylius_import_export.repository.process_import" />
+            <argument type="service" id="sylius_import_export.denormalizer.registry" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
 
             <tag name="messenger.message_handler" bus="sylius.command_bus" />
         </service>

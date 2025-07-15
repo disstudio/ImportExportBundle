@@ -101,7 +101,6 @@
         </service>
 
         <service id="sylius_import_export.controller.import_action" class="Sylius\ImportExport\Controller\ImportAction" public="true">
-            <argument type="service" id="sylius.resource_registry" />
             <argument type="service" id="form.factory" />
             <argument type="service" id="sylius.command_bus" />
             <argument>%sylius_import_export.import.form_class%</argument>

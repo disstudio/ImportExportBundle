@@ -58,6 +58,7 @@
             <argument type="service" id="sylius_import_export.denormalizer.registry" />
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="sylius.resource_registry" />
+            <argument type="service" id="validator" />
 
             <tag name="messenger.message_handler" bus="sylius.command_bus" />
         </service>

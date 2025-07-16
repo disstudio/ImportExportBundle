@@ -16,6 +16,7 @@ namespace Sylius\ImportExport\Controller;
 use Sylius\ImportExport\Messenger\Command\CreateImportProcess;
 use Sylius\ImportExport\Uploader\ImportFileUploader;
 use Sylius\Resource\Metadata\RegistryInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -47,7 +48,9 @@ final readonly class ImportAction
             if ($form->isSubmitted()) {
                 $errors = [];
                 foreach ($form->getErrors(true) as $error) {
-                    $errors[] = $error->getMessage();
+                    if ($error instanceof FormError) {
+                        $errors[] = $error->getMessage();
+                    }
                 }
                 $errorMessage = !empty($errors) ? implode(', ', $errors) : 'sylius_import_export.import_form_invalid';
                 $session->getFlashBag()->add('error', $errorMessage);

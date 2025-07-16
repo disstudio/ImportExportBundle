@@ -20,6 +20,7 @@ use Sylius\ImportExport\Exception\ImportFailedException;
 use Sylius\ImportExport\Messenger\Command\ImportCommand;
 use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 use Sylius\Resource\Metadata\RegistryInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ImportCommandHandler
 {
@@ -29,6 +30,7 @@ class ImportCommandHandler
         protected DenormalizerRegistryInterface $denormalizerRegistry,
         protected EntityManagerInterface $entityManager,
         protected RegistryInterface $metadataRegistry,
+        protected ValidatorInterface $validator,
     ) {
     }
 
@@ -47,6 +49,19 @@ class ImportCommandHandler
 
             foreach ($command->batchData as $recordData) {
                 $entity = $denormalizer->denormalize($recordData, $resourceClass);
+
+                $validationGroups = $process->getParameters()['validation_groups'] ?? ['Default'];
+                $violations = $this->validator->validate($entity, groups: $validationGroups);
+
+                if (count($violations) > 0) {
+                    $errorMessages = [];
+                    foreach ($violations as $violation) {
+                        $errorMessages[] = sprintf('%s: %s', $violation->getPropertyPath(), $violation->getMessage());
+                    }
+
+                    throw new ImportFailedException(sprintf('Validation failed for record: %s', implode(', ', $errorMessages)));
+                }
+
                 $this->entityManager->persist($entity);
 
                 ++$importedCount;

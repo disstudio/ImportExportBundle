@@ -8,7 +8,7 @@
     </a>
 </p>
 
-<h1 align="center">Grid Import/Export Bundle</h1>
+<h1 align="center">Import/Export Bundle</h1>
 
 The ImportExportBundle allows for easy and decoupled data migration to and from various mediums.<br>
 It works by relying on the Sylius [Resource](https://github.com/sylius/syliusresourcebundle) and [Grid](https://github.com/Sylius/syliusgridbundle) systems for resolving and providing data.
@@ -96,7 +96,7 @@ Symfony Flex, it's much quicker!
 1. Require plugin with composer:
 
     ```bash
-    composer require sylius/grid-import-export-bundle
+    composer require sylius/import-export-bundle
     ```
 
    > Remember to allow community recipes with `composer config extra.symfony.allow-contrib true` or during plugin installation process

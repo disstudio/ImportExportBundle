@@ -1,6 +1,6 @@
 {
-    "name": "sylius/grid-import-export-bundle",
-    "description": "tbd",
+    "name": "sylius/import-export-bundle",
+    "description": "The ImportExportBundle allows for easy and decoupled data migration to and from various mediums",
     "type": "symfony-bundle",
     "license": "proprietary",
     "authors": [

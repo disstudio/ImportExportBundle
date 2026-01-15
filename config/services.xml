@@ -148,7 +148,7 @@
             decorates="api_platform.serializer.normalizer.item"
             parent="api_platform.serializer.normalizer.item"
         >
-            <argument type="service" id=".inner" />
+            <argument key="$decorated" type="service" id=".inner" />
         </service>
 
         <service id="sylius_import_export.twig.component.import_resource" class="Sylius\ImportExport\Twig\Component\ImportResourceFormComponent">

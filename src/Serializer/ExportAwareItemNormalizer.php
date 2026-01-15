@@ -26,6 +26,8 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
+use Symfony\Component\Serializer\SerializerAwareInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @see ItemNormalizer
@@ -41,6 +43,7 @@ class ExportAwareItemNormalizer extends ItemNormalizer
         PropertyMetadataFactoryInterface $propertyMetadataFactory,
         IriConverterInterface $iriConverter,
         ResourceClassResolverInterface $resourceClassResolver,
+        private AbstractItemNormalizer $decorated,
         ?PropertyAccessorInterface $propertyAccessor = null,
         ?NameConverterInterface $nameConverter = null,
         ?ClassMetadataFactoryInterface $classMetadataFactory = null,
@@ -49,7 +52,6 @@ class ExportAwareItemNormalizer extends ItemNormalizer
         ?ResourceAccessCheckerInterface $resourceAccessChecker = null,
         array $defaultContext = [],
         ?TagCollectorInterface $tagCollector = null,
-        private AbstractItemNormalizer $decorated,
     ) {
         parent::__construct(
             $propertyNameCollectionFactory,
@@ -92,5 +94,14 @@ class ExportAwareItemNormalizer extends ItemNormalizer
         }
 
         return $this->decorated->supportsDenormalization($data, $type, $format, $context);
+    }
+
+    public function setSerializer(SerializerInterface $serializer): void
+    {
+        parent::setSerializer($serializer);
+
+        if ($this->decorated instanceof SerializerAwareInterface) {
+            $this->decorated->setSerializer($serializer);
+        }
     }
 }

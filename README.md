@@ -111,12 +111,15 @@ Symfony Flex, it's much quicker!
 
     ```yaml
     # config/packages/sylius_import_export.yaml
+    imports:
+        - { resource: "@SyliusImportExportBundle/config/config.yaml" }
+
     sylius_import_export:
         export:
             resources:
                 sylius.order: ~
                 app.brand:
-                    serialization_group: 'app:brand:export'
+                    serialization_groups: ['app:brand:export']
                     sections:
                         - 'Sylius\Bundle\AdminBundle\SectionResolver\AdminSection'
                     provider: 'sylius_import_export.provider.resource_data.orm'
@@ -127,6 +130,15 @@ Symfony Flex, it's much quicker!
                     validation_groups: ['Default', 'import']
     ```
    For a more detailed overview check the [configuration reference](docs/configuration_reference.md).
+
+4. Configure routes:
+
+    ```yaml
+    # config/routes/sylius_import_export.yaml
+    imports:
+        resource: "@SyliusImportExportBundle/config/routes.yaml"
+    ```
+
 
 ## File Storage
 

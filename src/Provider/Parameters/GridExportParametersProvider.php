@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class GridExportParametersProvider implements GridExportParametersProviderInterface
 {
-    /** @param array<string, array{serialization_group: string}> $resourceExportConfiguration */
+    /** @param array<string, array{serialization_groups: string[]}> $resourceExportConfiguration */
     public function __construct(
         private GridProviderInterface $gridProvider,
         private ParametersParserInterface $parametersParser,
@@ -34,7 +34,7 @@ final class GridExportParametersProvider implements GridExportParametersProvider
         $gridConfiguration = $this->gridProvider->get($gridName);
 
         $resourceExportConfiguration = $this->resourceExportConfiguration[$metadata->getAlias()] ?? [];
-        $serializationGroup = $resourceExportConfiguration['serialization_group'] ?? DefaultSerializationGroups::EXPORT_GROUP;
+        $serializationGroups = $resourceExportConfiguration['serialization_groups'] ?? [DefaultSerializationGroups::EXPORT_GROUP];
 
         $parameters = $this->parametersParser->parseRequestValues(
             $gridConfiguration->getDriverConfiguration(),
@@ -43,7 +43,7 @@ final class GridExportParametersProvider implements GridExportParametersProvider
 
         return array_merge($parameters, [
             'grid' => $gridName,
-            'serialization_group' => $serializationGroup,
+            'serialization_groups' => $serializationGroups,
         ]);
     }
 }

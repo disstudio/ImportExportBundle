@@ -46,12 +46,11 @@ class ExportCompletedHandler
 
                 $process->setOutput($outputPath);
             }
+            $process->setStatus('success');
         } catch (\Throwable $e) {
             $process->setStatus('failed');
             $process->setErrorMessage($e->getMessage());
         }
-
-        $process->setStatus('success');
 
         $this->batchedDataManager->deleteBatchedData($process);
 

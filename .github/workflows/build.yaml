@@ -43,7 +43,7 @@ jobs:
 
             -
                 name: Setup MySQL
-                uses: mirromutth/mysql-action@v1.1
+                uses: mirromutth/mysql-action@v1.2
                 with:
                     mysql version: "${{ matrix.mysql }}"
                     mysql root password: "root"
